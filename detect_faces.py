@@ -19,7 +19,8 @@ def face_detection(img, padding=0.05):
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
-    print(detections.shape)
+    # print(detections.shape)
+    dlib_boxes = []
 
     # loop through all possible 
     for i in range(0, detections.shape[2]):
@@ -29,8 +30,6 @@ def face_detection(img, padding=0.05):
         if confidence > 0.6:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (sX, sY, eX, eY) = box.astype('int')
-            print(box.astype('int'))
-            print(confidence)
             dX = int((eX - sX) * padding)
             dY = int((eY - sY) * padding)
 
@@ -40,12 +39,13 @@ def face_detection(img, padding=0.05):
             eY = min(h, eY + dY)
 
             faces.append(img_original[sY:eY, sX:eX])
+            dlib_boxes.append((sX, eX, eY, sY))
             cv2.rectangle(img, (sX, sY), (eX, eY), (0, 255, 0), 2)
     end = time()
-    print(end-start)
+    # print(end-start)
 
 
-    return img, faces
+    return img, faces, dlib_boxes
 
 # get a single face from the image that has the biggest confidence, this will be used for the dataset as to ignore any possible false positives
 def single_face_detection(img, padding=0.05):
@@ -91,7 +91,7 @@ def single_face_detection(img, padding=0.05):
     end = time()
     # print(end-start)
 
-    dlib_boxes = (sX, eX, eY, sY)
+    dlib_boxes = [(sX, eX, eY, sY)]
 
     return img, faces, dlib_boxes
 
