@@ -38,10 +38,10 @@ def recognize(image):
         y = sY - 15 if sY - 15 > 15 else sY + 15
         cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,255,0), 2)
     
+    cv2.imshow('face', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     return image, names
-    # cv2.imshow('face', image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
     
 
     

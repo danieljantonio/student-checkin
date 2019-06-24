@@ -33,9 +33,9 @@ def encode_faces():
         # boxes = face_recognition.face_locations(rgb, model=detection_method)
         img, faces, boxes = single_face_detection(img)
         print(boxes)
-        cv2.imshow(name, img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # cv2.imshow(name, img)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         # (sX, eX, eY, sY) = boxes[0]
 
         # turning the bounding boxes from the faces and turning them into a 128 number vector
