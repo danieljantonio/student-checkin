@@ -11,37 +11,21 @@ def recognize(image):
     print("[info] loading encodings... ")
     data = pickle.loads(open(encoding_file, "rb").read())
 
-    # convert image to rgb for dlib
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
     # get the coordinates of the faces from the image, then calculate the vector number for each face
     print("[info] recognizing faces...")
-    img, faces, boxes = face_detection(rgb_image)
-    encodings = face_recognition.face_encodings(rgb_image, boxes)
-    print(boxes)
-
-    names = []
-    for encoding in encodings:
-        matches = face_recognition.compare_faces(data["encodings"], encoding, tolerance=0.4)
-        name = "unknown"
-        if True in matches:
-            matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-            counts = {}
-
-            for i in matchedIdxs:
-                name = data["names"][i]
-                counts[name] = counts.get(name, 0) + 1
-            name = max(counts, key=counts.get)
-        names.append(name)
-    print(names)
-    for ((sX, eX, eY, sY), name) in zip(boxes, names):
-        cv2.rectangle(image, (sX, sY), (eX, eY), (0,255,0), 2)
-        y = sX - 15 if sX - 15 > 15 else sX + 15
-        cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,255,0), 2)
-    
-    cv2.imshow('', image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    img, faces, boxes = face_detection(image)
+    print(data["names"])
+    for face in faces:
+        h, w = face.shape[:2]
+        box = (0, w-1, h-1, 0)
+        rgb_face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+        encoding = face_recognition.face_encodings(rgb_face, [box])
+        matches = face_recognition.compare_faces(data["encodings"], encoding[0], tolerance=0.5)
+        print(matches)
+        cv2.imshow('face', face)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        
 
     
 

@@ -39,6 +39,9 @@ def face_detection(img, padding=0.05):
             eY = min(h, eY + dY)
 
             faces.append(img_original[sY:eY, sX:eX])
+            # cv2.imshow('faces', img_original[sY:eY, sX:eX])
+            # cv2.waitKey(0)
+            # cv2.destroyAllWindows()
             dlib_boxes.append((sX, eX, eY, sY))
             cv2.rectangle(img, (sX, sY), (eX, eY), (0, 255, 0), 2)
     end = time()
@@ -62,7 +65,7 @@ def single_face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
+    blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
 
@@ -96,13 +99,13 @@ def single_face_detection(img, padding=0.05):
 
     return img, faces, dlib_boxes
 
-# img = cv2.imread('src/face_test1.jpg')
-# img2 = cv2.imread('src/test1.jpg')
-# img3 = cv2.imread('src/test2.jpg')
-# img4 = cv2.imread('src/test3.jpg')
+# img = cv2.imread('dataset/hao/hao1.jpg')
+# img2 = cv2.imread('dataset/jy/jy1.jpg')
+# img3 = cv2.imread('dataset//jy/jy2.jpg')
+# img4 = cv2.imread('dataset/lishan/lish1.jpg')
 # img_arr = [img, img2, img3, img4]
 # for img in img_arr:
-#     facesimg, _, _ = face_detection(img)
+#     facesimg, _, _ = single_face_detection(img)
 #     cv2.imshow('faces', facesimg)
 #     cv2.waitKey(0)
 #     cv2.destroyAllWindows()
