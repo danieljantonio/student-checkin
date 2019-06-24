@@ -5,16 +5,17 @@ import pickle
 import os
 from detect_faces import single_face_detection, face_detection
 from time import time
+from resize import resize
 
 def encode_faces():
     fnStart = time()
-    dataset = 'sample_dataset'
+    dataset = 'dataset'
     encodings_file = 'encodings.pickle'
     detection_method = 'cnn'
 
     # get the paths for the images in the dataset
     imgPaths = list(paths.list_images(dataset))
-
+    print(imgPaths)
     # initializing a list of known encodings and names
     knownEncodings = []
     knownNames = []
@@ -26,14 +27,19 @@ def encode_faces():
 
         # reading the image and converting it into RGB (converting to rgb is useful for dlib, however opencv dnn is able to process both RGB and BGR so it does not really matter which one is used)
         img = cv2.imread(imgPath)
-        rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        
+        rgb_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         # boxes = face_recognition.face_locations(rgb, model=detection_method)
-        a, b, boxes = face_detection(rgb)
+        img, faces, boxes = single_face_detection(img)
+        print(boxes)
+        # cv2.imshow(name, img)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         # (sX, eX, eY, sY) = boxes[0]
 
         # turning the bounding boxes from the faces and turning them into a 128 number vector
-        encodings = face_recognition.face_encodings(rgb, boxes)
+        encodings = face_recognition.face_encodings(rgb_image, boxes)
 
         # looping over the encodings
         for encoding in encodings:

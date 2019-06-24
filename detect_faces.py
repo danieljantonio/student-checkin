@@ -16,18 +16,18 @@ def face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
     # print(detections.shape)
     dlib_boxes = []
 
-    # loop through all possible 
+    # loop through all possible
     for i in range(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
 
         # check if confidence > 0.5
-        if confidence > 0.6:
+        if confidence > 0.5:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (sX, sY, eX, eY) = box.astype('int')
             dX = int((eX - sX) * padding)
@@ -42,7 +42,7 @@ def face_detection(img, padding=0.05):
             dlib_boxes.append((sX, eX, eY, sY))
             cv2.rectangle(img, (sX, sY), (eX, eY), (0, 255, 0), 2)
     end = time()
-    # print(end-start)
+    print("time taken {:.3f}".format(end-start))
 
 
     return img, faces, dlib_boxes
@@ -62,7 +62,7 @@ def single_face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
 
@@ -70,7 +70,8 @@ def single_face_detection(img, padding=0.05):
     max_conf_index = 0
     for i in range(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
-        if confidence > 0.6:
+        # check if confidence > 0.5
+        if confidence > 0.5:
             if confidence > max_conf:
                 max_conf = confidence
                 max_conf_index = i
@@ -95,12 +96,19 @@ def single_face_detection(img, padding=0.05):
 
     return img, faces, dlib_boxes
 
-# img = cv2.imread('sample_dataset/alan_grant/00000025.png')
+# img = cv2.imread('src/face_test1.jpg')
+# img2 = cv2.imread('src/test1.jpg')
+# img3 = cv2.imread('src/test2.jpg')
+# img4 = cv2.imread('src/test3.jpg')
+# img_arr = [img, img2, img3, img4]
+# for img in img_arr:
+#     facesimg, _, _ = face_detection(img)
+#     cv2.imshow('faces', facesimg)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
+
 # faces_img, faces = single_face_detection(img, 0.1)
 # print(faces[0].shape)
-# cv2.imshow('faces', faces_img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
 
 # count = 0
 # for face in faces:
