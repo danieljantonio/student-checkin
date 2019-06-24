@@ -15,19 +15,36 @@ def recognize(image):
     print("[info] recognizing faces...")
     img, faces, boxes = face_detection(image)
     print(data["names"])
+    names = []
     for face in faces:
         h, w = face.shape[:2]
         box = (0, w-1, h-1, 0)
         rgb_face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
         encoding = face_recognition.face_encodings(rgb_face, [box])
         matches = face_recognition.compare_faces(data["encodings"], encoding[0], tolerance=0.5)
+        name = "unknown"
         print(matches)
-        cv2.imshow('face', face)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        
+        if True in matches:
+            matched = [i for (i, match) in enumerate(matches) if match]
+            counts = {}
+
+            for i in matched:
+                name = data["names"][i]
+                counts[name] = counts.get(name, 0) + 1
+            name = max(counts, key=counts.get)
+        names.append(name)
+    for ((sX, eX, eY, sY), name) in zip(boxes, names):
+        cv2.rectangle(image, (sX, sY), (eX, eY), (0,255,0), 2)
+        y = sY - 15 if sY - 15 > 15 else sY + 15
+        cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,255,0), 2)
+    
+    return image, names
+    # cv2.imshow('face', image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    
 
     
 
-img = cv2.imread('testimg/face_test1.jpg')
+img = cv2.imread('testimg/face_test2.jpg')
 recognize(img)

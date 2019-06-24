@@ -16,7 +16,8 @@ def face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
+    # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
+    blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
     # print(detections.shape)
@@ -27,7 +28,7 @@ def face_detection(img, padding=0.05):
         confidence = detections[0, 0, i, 2]
 
         # check if confidence > 0.5
-        if confidence > 0.5:
+        if confidence > 0.6:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (sX, sY, eX, eY) = box.astype('int')
             dX = int((eX - sX) * padding)
@@ -99,13 +100,14 @@ def single_face_detection(img, padding=0.05):
 
     return img, faces, dlib_boxes
 
-# img = cv2.imread('dataset/hao/hao1.jpg')
-# img2 = cv2.imread('dataset/jy/jy1.jpg')
-# img3 = cv2.imread('dataset//jy/jy2.jpg')
-# img4 = cv2.imread('dataset/lishan/lish1.jpg')
-# img_arr = [img, img2, img3, img4]
+# img = cv2.imread('testimg/face_test2.jpg')
+# # img2 = cv2.imread('dataset/jy/jy1.jpg')
+# # img3 = cv2.imread('dataset//jy/jy2.jpg')
+# # img4 = cv2.imread('dataset/lishan/lish1.jpg')
+# # img_arr = [img, img2, img3, img4]
+# img_arr = [img]
 # for img in img_arr:
-#     facesimg, _, _ = single_face_detection(img)
+#     facesimg, _, _ = face_detection(img)
 #     cv2.imshow('faces', facesimg)
 #     cv2.waitKey(0)
 #     cv2.destroyAllWindows()
