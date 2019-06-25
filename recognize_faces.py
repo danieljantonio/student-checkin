@@ -46,5 +46,5 @@ def recognize(image):
 
     
 
-img = cv2.imread('testimg/face_test2.jpg')
-recognize(img)
+# img = cv2.imread('testimg/face_test2.jpg')
+# recognize(img)

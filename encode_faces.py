@@ -60,7 +60,7 @@ def encode_faces():
 def encode():
     encode_faces()
 
-encode()
+# encode()
 
 # cv2.imshow(name, img[sY:eY, sX:eX])
 # cv2.waitKey(0)
