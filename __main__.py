@@ -5,6 +5,7 @@ import encode_faces
 import recognize_faces
 import cv2
 import checkin
+import recognize_videos
 
 if __name__ == '__main__':
     print('main')
@@ -33,8 +34,11 @@ if __name__ == '__main__':
             else:
                 print("Invalid Image path\nRedirected to menu")
         elif choice == "3":
-            print("# 3. run recognition on video")
-        
+            print("# 4. Input video path")
+            vid = input()
+            names = recognize_videos.recog_vid(vid)
+            print("Detected Students: ")
+            print(names)
         elif choice == "4":
             print("Please input image path")
             img = cv2.imread(input(),1)
