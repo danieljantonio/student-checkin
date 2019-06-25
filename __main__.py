@@ -4,6 +4,7 @@
 import encode_faces
 import recognize_faces
 import cv2
+import checkin
 
 if __name__ == '__main__':
     print('main')
@@ -15,7 +16,7 @@ if __name__ == '__main__':
 
     while True:
         print("\n")
-        print("Choose Option\n1. Add image to encoding\n2. run recognition on image\n3. run recognition on video\n\n0.Exit\nChoice: ")
+        print("Choose Option\n1. Add image to encoding\n2. run recognition on image\n3. run recognition on video\n4. Run CheckIn on image\n\n0.Exit\nChoice: ")
         choice = input()
         print("\n")
         if choice == "1":
@@ -33,7 +34,24 @@ if __name__ == '__main__':
                 print("Invalid Image path\nRedirected to menu")
         elif choice == "3":
             print("# 3. run recognition on video")
+        
+        elif choice == "4":
+            print("Please input image path")
+            img = cv2.imread(input(),1)
+            if img is None:
+                print("Invalid Image path\nRedirected to menu")
+                continue
+
+            print("Class name(currently available: CSC3201, CSC3202)")
+            cName = input()
             
+            print("Date ")
+            date = input()
+
+            _, names = recognize_faces.recognize(img)
+            # remove redundant elements
+            names = list(set(names))
+            checkin.checkIn(names, cName, date)
         elif choice == "0":
             print("exit")
             break
