@@ -33,7 +33,7 @@ if __name__ == '__main__':
                 print("Invalid Image path\nRedirected to menu")
         elif choice == "3":
             print("# 3. run recognition on video")
-        
+            
         elif choice == "0":
             print("exit")
             break
