@@ -6,6 +6,7 @@ import recognize_faces
 import cv2
 import checkin
 import recognize_videos
+import video_recognition
 
 if __name__ == '__main__':
     print('main')
@@ -25,6 +26,7 @@ if __name__ == '__main__':
             print("Please ensure that you have added the images to the dataset folder.\nFor more information please refer to the Read Me\nEnter any key to Continue")  
             input()
             encode_faces.encode()
+        
         elif choice == "2":
             # Run facial recognition on specified image
             print("Please input image path")
@@ -33,12 +35,14 @@ if __name__ == '__main__':
                 recognize_faces.recognize(img)
             else:
                 print("Invalid Image path\nRedirected to menu")
+        
         elif choice == "3":
             print("# 4. Input video path")
-            vid = input()
-            names = recognize_videos.recog_vid(vid)
+            vidPath = input()
+            names = video_recognition.recognize_video(vidPath)
             print("Detected Students: ")
             print(names)
+        
         elif choice == "4":
             print("Please input image path")
             img = cv2.imread(input(),1)
@@ -56,6 +60,7 @@ if __name__ == '__main__':
             # remove redundant elements
             names = list(set(names))
             checkin.checkIn(names, cName, date)
+            
         elif choice == "0":
             print("exit")
             break

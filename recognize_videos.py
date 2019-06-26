@@ -32,4 +32,4 @@ def recog_vid(video):
     present_list = list(set(present_list))
     return present_list
 
-# print(recog_vid("testing_videos/vid1.mp4"))
+# print(recog_vid("test_vid/classroom1.avi"))

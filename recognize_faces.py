@@ -14,16 +14,16 @@ def recognize(image):
     # get the coordinates of the faces from the image, then calculate the vector number for each face
     print("[info] recognizing faces...")
     img, faces, boxes = face_detection(image)
-    print(data["names"])
+    # print(data["names"])
     names = []
     for face in faces:
         h, w = face.shape[:2]
         box = (0, w-1, h-1, 0)
         rgb_face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
         encoding = face_recognition.face_encodings(rgb_face, [box])
-        matches = face_recognition.compare_faces(data["encodings"], encoding[0], tolerance=0.5)
+        matches = face_recognition.compare_faces(data["encodings"], encoding[0], tolerance=0.4)
         name = "unknown"
-        print(matches)
+        # print(matches)
         if True in matches:
             matched = [i for (i, match) in enumerate(matches) if match]
             counts = {}
@@ -36,11 +36,12 @@ def recognize(image):
     for ((sX, eX, eY, sY), name) in zip(boxes, names):
         cv2.rectangle(image, (sX, sY), (eX, eY), (0,255,0), 2)
         y = sY - 15 if sY - 15 > 15 else sY + 15
-        cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,255,0), 2)
+        cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
     
-    cv2.imshow('face', image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imwrite(str(time())+".jpg", image)
+    # cv2.imshow('face', cv2.resize(image,(1080, 720)))
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     return image, names
     
 

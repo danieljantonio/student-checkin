@@ -16,7 +16,8 @@ def face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
+    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (900, 900), (104.0, 177.0, 123.0))
+    # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     # blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
@@ -125,3 +126,16 @@ def single_face_detection(img, padding=0.05):
 
 # (sX, sY, eX, eY) = mine
 # (sX, eX, eY, sY) = face_detection dlib
+
+
+# img = cv2.imread('test_imgs/classroom1.jpg')
+# facesimg, faces, _ = face_detection(img)
+# cv2.imshow('faces', facesimg)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+
+# for face in faces:
+#     cv2.imshow('faces', face)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()

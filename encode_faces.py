@@ -15,7 +15,7 @@ def encode_faces():
 
     # get the paths for the images in the dataset
     imgPaths = list(paths.list_images(dataset))
-    print(imgPaths)
+    # print(imgPaths)
     # initializing a list of known encodings and names
     knownEncodings = []
     knownNames = []
@@ -32,7 +32,7 @@ def encode_faces():
 
         # boxes = face_recognition.face_locations(rgb, model=detection_method)
         img, faces, boxes = single_face_detection(img)
-        print(boxes)
+        # print(boxes)
         # cv2.imshow(name, img)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()

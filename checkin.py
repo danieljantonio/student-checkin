@@ -17,7 +17,7 @@ def checkIn(names, cName, date):
     print('checkin/'+cName+'.txt')
     nameList = getNameList('checkin/'+cName+'.txt')
     date = date.replace("/","_")
-    check_list = cName + '_' + date
+    check_list = cName + '_' + date + '.txt'
     # image = cv2.imread('testing_images/test1.jpg',1)
     
     # _, names = recognize_faces.recognize(image)
