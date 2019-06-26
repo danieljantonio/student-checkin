@@ -63,6 +63,7 @@ if __name__ == '__main__':
 
             _, names = recognize_faces.recognize(img)
             checkin.checkIn(names, cName)
+            sleep(2)
             
         elif choice == "5":
             print("Please input video path")
@@ -76,6 +77,7 @@ if __name__ == '__main__':
             cName = input()
             
             checkin.checkIn(names, cName)
+            sleep(2)
 
         elif choice == "0":
             print("exit")

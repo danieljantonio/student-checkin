@@ -21,7 +21,7 @@ def face_detection(img, padding=0.05):
         print(300)
         blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     else:
-        print(str(1200/900))
+        print("1200/900")
         # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (900, 900), (104.0, 177.0, 123.0))
         blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     model.setInput(blob)
