@@ -42,7 +42,7 @@ def recognize(image):
     # cv2.imshow('face', cv2.resize(image,(1080, 720)))
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-    return image, names
+    return image, set(names)
     
 
     

@@ -5,7 +5,7 @@ import pickle
 import os
 from detect_faces import single_face_detection, face_detection
 from time import time
-from resize import resize
+# from resize import resize
 
 def encode_faces():
     fnStart = time()

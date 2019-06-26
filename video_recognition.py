@@ -4,8 +4,8 @@ from recognize_faces import recognize
 def recognize_video(video_path):
     cap = cv2.VideoCapture(video_path)
     if (cap.isOpened()== False): 
-        print("Error opening video stream or file")
-        return []
+        print("Error opening video stream or file\n")
+        return 0
     frame_ct = 0
     attendance = []
     while True and frame_ct <= 50:
@@ -21,11 +21,11 @@ def recognize_video(video_path):
             cv2.putText(frame, "frame = " + str(frame_ct), (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
             frame = cv2.resize(frame, (int(w/3),int(h/3)))
 
-            cv2.imshow('frame', frame)
+            # cv2.imshow('frame', frame)
 
-            #exit
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            # #exit
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+            #     break
     attendance = list(set(attendance))
     for (i, name) in enumerate(attendance):
         if 'unknown' in name:
