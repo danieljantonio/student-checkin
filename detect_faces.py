@@ -3,6 +3,7 @@ import numpy as np
 from time import time
 
 def face_detection(img, padding=0.05):
+    print(img.shape)
     start = time()
     faces = []
     img_original = img.copy()
@@ -16,9 +17,13 @@ def face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (900, 900), (104.0, 177.0, 123.0))
-    # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
-    # blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+    if h < 1200 or w < 1200:
+        print(300)
+        blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+    else:
+        print(str(1200/900))
+        # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (900, 900), (104.0, 177.0, 123.0))
+        blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
     # print(detections.shape)

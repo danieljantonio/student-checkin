@@ -39,10 +39,11 @@ def recognize(image):
         cv2.putText(image, name, (sX, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
     
     # cv2.imwrite(str(time())+".jpg", image)
-    # cv2.imshow('face', cv2.resize(image,(1080, 720)))
+    h, w = image.shape[:2]
+    # cv2.imshow('face', cv2.resize(image,(int(w/3), int(h/3))))
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-    return image, set(names)
+    return image, list(set(names))
     
 
     

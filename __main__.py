@@ -32,7 +32,8 @@ if __name__ == '__main__':
             print("Please input image path")
             img = cv2.imread(input())
             if img is not None:
-                recognize_faces.recognize(img)
+                img, names = recognize_faces.recognize(img)
+                print(names)
             else:
                 print("Invalid Image path\nRedirected to menu")
                 sleep(1)
