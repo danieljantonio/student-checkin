@@ -39,7 +39,7 @@ def encode_faces():
         # (sX, eX, eY, sY) = boxes[0]
 
         # turning the bounding boxes from the faces and turning them into a 128 number vector
-        encodings = face_recognition.face_encodings(rgb_image, boxes)
+        encodings = face_recognition.face_encodings(rgb_image, boxes, num_jitters=10)
 
         # looping over the encodings
         for encoding in encodings:

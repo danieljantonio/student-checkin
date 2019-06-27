@@ -17,12 +17,11 @@ def face_detection(img, padding=0.05):
 
     # detect faces
     (h, w) = img.shape[:2]
-    if h < 1200 or w < 1200:
+    if h < 1000 or w < 1000:
         print(300)
         blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
     else:
-        print("1200/900")
-        # blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (900, 900), (104.0, 177.0, 123.0))
+        print(1200)
         blob = cv2.dnn.blobFromImage(cv2.resize(img, (1200, 1200)), 1.0, (1200, 1200), (104.0, 177.0, 123.0))
     model.setInput(blob)
     detections = model.forward()
@@ -51,8 +50,7 @@ def face_detection(img, padding=0.05):
             # cv2.destroyAllWindows()
             dlib_boxes.append((sX, eX, eY, sY))
             cv2.rectangle(img, (sX, sY), (eX, eY), (0, 255, 0), 2)
-    end = time()
-    print("time taken {:.3f}".format(end-start))
+    print("[info] face recognition took {:.3f} seconds".format(time()-start))
 
 
     return img, faces, dlib_boxes
